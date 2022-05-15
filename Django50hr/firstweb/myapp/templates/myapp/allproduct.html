@@ -1,0 +1,25 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+
+    <h3>สินค้าทั้งหมดในร้าน</h3>
+    <p>ตอนนี้เรามีสินค้าให้เลือกชมหลายรายการ</p>
+
+    {% for item in product %}
+    <div class="card" style="width:400px">
+
+        <img src="{{ item.image_url }}" class="card-img-top" width="400"  >
+        <div class="card-body">
+            <h1 class="card-title" >{{ item.name }}</h1>
+            <p>{{item.price}}</p>
+            <p>{{item.detail}}</p>
+        </div>
+
+    </div>
+        <br><hr>
+    
+
+    {% endfor %}
+
+    
+{% endblock content %}
