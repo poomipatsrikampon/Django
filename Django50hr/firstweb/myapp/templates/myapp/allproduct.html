@@ -4,22 +4,42 @@
 
     <h3>สินค้าทั้งหมดในร้าน</h3>
     <p>ตอนนี้เรามีสินค้าให้เลือกชมหลายรายการ</p>
-
-    {% for item in product %}
-    <div class="card" style="width:400px">
-
-        <img src="{{ item.image_url }}" class="card-img-top" width="400"  >
-        <div class="card-body">
-            <h1 class="card-title" >{{ item.name }}</h1>
-            <p>{{item.price}}</p>
-            <p>{{item.detail}}</p>
-        </div>
-
-    </div>
-        <br><hr>
     
+    <div class="container-fluid">
+        <div class="row">
+            {% for item in product %}
+            <div class="col-sm-4">
+                <div class="card" style="width:320px">
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" class="card-img-top" width="320px" height="300px" >
+                    {% else %}
+                        <img src="/media/default.png" class="card-img-top" width="320px" height="300px" >
+                    {% endif %}
+                    <div class="card-body">
+                        <h1 class="card-title" >{{ item.name }}</h1>
+                        <p>ราคา {{item.price}} บาท/หน่วย</p>
+                        <p>{{item.detail}}</p>
+                        {% if item.quantity > 1 %}
+                            <p>สินค้ามีในสต๊อก: {{ item.quantity }} {{ item.unit }} </p>
+                        {% else %}
+                            <p style="color: red;" >สินค้าในสต๊อกหมด:{{ item.quantity }}</p>
+                        {% endif %}
+                        {% if item.instock %}
+                            <a type="button" class="btn btn-success">สั่งซื้อ</a>
+                        {% else %}
+                            <a type="button" class="btn btn-warning">สินค้าหมด</a>
+                        {% endif %}
+                    </div>
 
-    {% endfor %}
+                </div>
+                <br>
+            </div>
+            
+            {% endfor %}
+        </div>      
+    </div>
+
+    
 
     
 {% endblock content %}
