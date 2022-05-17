@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Arm Fruit Shop</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
@@ -11,21 +11,68 @@
 </head>
 <body>
 
-<div class="jumbotron text-center">
+  
+<div class="jumbotron text-center" style="margin-bottom: 0;" >
   <h1>ร้านจำหน่ายผลไม้นายอาร์ม</h1>
-  <p> 
 
-    <a href="{% url 'home-page' %}">หน้าแรก</a> |
-    <a href="{% url 'about-page' %}">เกี่ยวกับเรา</a> |
-    <a href="{% url 'contract-page' %}">ติดต่อ</a> |
-    <a href="{% url 'addproduct-page' %}">เพิ่มสินค้า</a> |
-    <a href="{% url 'allproduct-page' %}">สินค้าทั้งหมด</a> 
-      
-  </p> 
 </div>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark" >
+  <a class="navbar-brand" href="{% url 'home-page' %}">ผลไม้นายอาร์ม</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about-page' %}">เกี่ยวกับเรา</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contract-page' %}">ติดต่อ</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'allproduct-page' %}">สินค้าทั้งหมด</a>
+                  </li>
+                  {% if user.is_authenticated and user.profile.usertype == 'member' %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="####">รายการสั่งซื้อ</a>
+                  </li>
+                  {% endif %}
+                  <li class="nav-item">
+                    {% if user.is_authenticated and user.profile.usertype == 'admin' %}
+                      <a class="nav-link" href="{% url 'addproduct-page' %}">เพิ่มสินค้า</a>
+                    {% endif %}
+                  </li>  
+                  <div class="dropdown">
+                    <a  type="button" class="nav-link" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </ul> 
+                          {% if user.is_authenticated %}
+                          <img src="{{user.profile.photo.url}}" width="40" height="40" class="rounded-circle" >&nbsp&nbsp
+                          <p style="color: white; margin-top: 10px; " >
+                              สวัสดีคุณ
+                              {{user.first_name}} 
+                              {{user.last_name}}
+                              [{{user.profile.usertype}}]
+                          </p>&nbsp&nbsp&nbsp 
+                          <a class="btn btn-primary" href="{% url 'logout' %}">ออกจากระบบ</a>
+                          {% else %}
+                          <a class="btn btn-primary" href="{% url 'register-page' %}">สมัครสมาชิก</a>&nbsp&nbsp&nbsp 
+                          <a class="btn btn-primary" href="{% url 'login' %}">เข้าสู่ระบบ</a>
+                          {% endif %}
+  
+                  
+          
+  </div>     
+</nav>
 
-
-<div class="container" style="margin-bottom: 50px;" >
+<div class="container" style="margin-bottom: 50px; margin-top: 30px;" >
     {% block content %}
     {% endblock content %}
 </div>

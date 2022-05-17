@@ -7,4 +7,5 @@ urlpatterns = [
     path('contract/',contract, name='contract-page'),
     path('addproduct/',add_product, name='addproduct-page'),
     path('allproduct/',product, name='allproduct-page'),
+    path('register/',register, name='register-page'),
 ]
