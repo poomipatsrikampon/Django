@@ -1,0 +1,14 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+
+    <h3>ตระกร้าสินค้า</h3>
+ 
+        {% for item in mycart %}
+            <p> {{item.time_stamp}} | {{item.product_id}} | {{item.product_name}} | 
+                {{item.price}} | {{item.quantity}} | {{item.total}} </p>
+        {% endfor %}
+  
+
+
+{% endblock content %}

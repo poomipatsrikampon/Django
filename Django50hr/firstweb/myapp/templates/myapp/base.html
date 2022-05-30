@@ -34,7 +34,7 @@
                   </li>
                   {% if user.is_authenticated and user.profile.usertype == 'member' %}
                   <li class="nav-item">
-                    <a class="nav-link" href="####">รายการสั่งซื้อ</a>
+                    <a class="nav-link" href="{% url 'mycart-page' %}">รายการสั่งซื้อ</a>
                   </li>
                   {% endif %}
                   <li class="nav-item">
@@ -59,7 +59,7 @@
                               สวัสดีคุณ
                               {{user.first_name}} 
                               {{user.last_name}}
-                              [{{user.profile.usertype}}]
+                            
                           </p>&nbsp&nbsp&nbsp 
                           <a class="btn btn-primary" href="{% url 'logout' %}">ออกจากระบบ</a>
                           {% else %}

@@ -1,15 +1,81 @@
 {% extends 'myapp/base.html' %}
 
 {% block content %}
+<h3>สินค้าล่าสุด</h3>
+<p>สินค้าล่าสุดของร้าน</p>
+<div class="container-fluid">
   <div class="row">
+      {% for item in product %}
+      <div class="col-sm-4">
+          <div class="card" style="width:320px">
+              {% if item.image %}
+                  <img src="{{ item.image.url }}" class="card-img-top" width="320px" height="300px" >
+              {% else %}
+                  <img src="/media/default.png" class="card-img-top" width="320px" height="300px" >
+              {% endif %}
+              <div class="card-body">
+                  <h1 class="card-title" >{{ item.name }}</h1>
+                  <p>ราคา {{item.price}} บาท/หน่วย</p>
+                  <p>{{item.detail}}</p>
+                  {% if item.quantity > 1 %}
+                      <p>สินค้ามีในสต๊อก: {{ item.quantity }} {{ item.unit }} </p>
+                  {% else %}
+                      <p style="color: red;" >สินค้าในสต๊อกหมด:{{ item.quantity }}</p>
+                  {% endif %}
+                  {% if item.instock %}
+                      <a type="button" class="btn btn-success">สั่งซื้อ</a>
+                  {% else %}
+                      <a type="button" class="btn btn-warning">สินค้าหมด</a>
+                  {% endif %}
+              </div>
 
-    <div class="col-sm-4">
-      <h3>แอปเปิ้ล</h3>
-      <p>แอปเปิ้ลนำเข้าจากญี่ปุ่น</p>
-    </div>
+          </div>
+          <br>
+      </div>
+      
+      {% endfor %}
+  </div>      
+</div>
+<div class="container">
+  <center>
+    <a href="{% url 'allproduct-page' %}"><h1>ดูสินค้าทั้งหมด</h1></a>
+  </center>
+</div>
+<h3>สินค้าขายดี (ต้อง preorder)</h3>
+<div class="container-fluid">
+  <div class="row">
+      {% for item in preorder %}
+      <div class="col-sm-4">
+          <div class="card" style="width:320px">
+              {% if item.image %}
+                  <img src="{{ item.image.url }}" class="card-img-top" width="320px" height="300px" >
+              {% else %}
+                  <img src="/media/default.png" class="card-img-top" width="320px" height="300px" >
+              {% endif %}
+              <div class="card-body">
+                  <h1 class="card-title" >{{ item.name }}</h1>
+                  <p>ราคา {{item.price}} บาท/หน่วย</p>
+                  <p>{{item.detail}}</p>
+                  {% if item.quantity > 1 %}
+                      <p>สินค้ามีในสต๊อก: {{ item.quantity }} {{ item.unit }} </p>
+                  {% else %}
+                      <p style="color: red;" >สินค้าในสต๊อกหมด:{{ item.quantity }}</p>
+                  {% endif %}
+                  {% if item.instock %}
+                      <a type="button" class="btn btn-success">สั่งซื้อ</a>
+                  {% else %}
+                      <a type="button" class="btn btn-warning">สินค้าหมด</a>
+                  {% endif %}
+              </div>
 
- 
-  </div>
+          </div>
+          <br>
+      </div>
+      
+      {% endfor %}
+  </div>      
+</div>
+
 
   {% endblock content %}
 

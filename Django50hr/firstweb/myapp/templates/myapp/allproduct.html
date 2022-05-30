@@ -25,7 +25,11 @@
                             <p style="color: red;" >สินค้าในสต๊อกหมด:{{ item.quantity }}</p>
                         {% endif %}
                         {% if item.instock %}
-                            <a type="button" class="btn btn-success">สั่งซื้อ</a>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'addtocart-page' item.id %}" type="button" class="btn btn-success">สั่งซื้อ</a>
+                            {% else %}
+                                <a href="{% url 'login' %}" type="button" class="btn btn-success">สั่งซื้อ</a>
+                            {% endif %}
                         {% else %}
                             <a type="button" class="btn btn-warning">สินค้าหมด</a>
                         {% endif %}

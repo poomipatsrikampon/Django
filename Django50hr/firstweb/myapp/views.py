@@ -12,7 +12,15 @@ from django.contrib.auth import authenticate, login
 # Create your views here. 
 def home_view(request):
 
-    return render(request,'myapp/home.html')
+    product = allProduct.objects.all().order_by('id').reverse()[:3]
+    preorder = allProduct.objects.filter(quantity__lte=0)
+    context = {
+        'product':product,
+        'preorder':preorder
+    }
+
+
+    return render(request,'myapp/home.html',context)
 
 
 def about(request):
@@ -101,4 +109,28 @@ def register(request):
     return render(request,'myapp/register.html')
 
 
-#ep.10
+def add_to_cart(request,pid):
+    username = request.user.username
+    user = User.objects.get(username=username)
+    check = allProduct.objects.get(id=pid)
+
+    newcart = Cart()
+    newcart.user = user
+    newcart.product_id = pid
+    newcart.product_name= check.name
+    newcart.price = check.price
+    newcart.quantity = 1
+    newcart.total = check.price
+    calculate = (check.price) * 1
+    newcart.total = calculate
+    newcart.save()
+    return redirect('allproduct-page')
+
+
+def my_cart(request):
+    username = request.user.username
+    user = User.objects.get(username=username)
+    mycart = Cart.objects.filter(user=user)
+    context = {'mycart':mycart}
+    return render(request,'myapp/mycart.html', context)
+

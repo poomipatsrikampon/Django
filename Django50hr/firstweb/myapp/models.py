@@ -26,3 +26,14 @@ class allProduct(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    product_id = models.CharField(max_length=100)
+    product_name = models.CharField(max_length=100)
+    price = models.FloatField()
+    quantity = models.IntegerField()
+    total = models.FloatField()
+    time_stamp = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
