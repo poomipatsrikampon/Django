@@ -10,6 +10,7 @@ class Profile(models.Model):
         blank=True,default = 'userprofiledefault.png'
     )
     usertype = models.CharField(max_length=100,default='member')
+    cartquan = models.IntegerField(default=0)
 
     def __str__(self):
         return self.user.first_name

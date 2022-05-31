@@ -114,17 +114,41 @@ def add_to_cart(request,pid):
     user = User.objects.get(username=username)
     check = allProduct.objects.get(id=pid)
 
-    newcart = Cart()
-    newcart.user = user
-    newcart.product_id = pid
-    newcart.product_name= check.name
-    newcart.price = check.price
-    newcart.quantity = 1
-    newcart.total = check.price
-    calculate = (check.price) * 1
-    newcart.total = calculate
-    newcart.save()
-    return redirect('allproduct-page')
+    try:
+        newcart = Cart.objects.get(user=user, product_id=str(pid))
+        newquan = newcart.quantity + 1
+        newcart.quantity = newquan
+        newcart.total = newcart.price * newquan
+        newcart.save()
+
+
+        count = Cart.objects.filter(user=user)
+        count = sum([c.quantity for c in count ])
+        updatequan = Profile.objects.get(user=user)
+        updatequan.cartquan = count
+        updatequan.save()
+
+        return redirect('allproduct-page')
+
+    except:
+        newcart = Cart()
+        newcart.user = user
+        newcart.product_id = pid
+        newcart.product_name= check.name
+        newcart.price = check.price
+        newcart.quantity = 1
+        newcart.total = check.price
+        calculate = (check.price) * 1
+        newcart.total = calculate
+        newcart.save()
+
+        count = Cart.objects.filter(user=user)
+        count = sum([c.quantity for c in count ])
+        updatequan = Profile.objects.get(user=user)
+        updatequan.cartquan = count
+        updatequan.save()
+        
+        return redirect('allproduct-page')
 
 
 def my_cart(request):
